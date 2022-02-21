@@ -1,7 +1,9 @@
 const express=require('express');
 const req = require('express/lib/request');
 const app=express();
-const port=require('./helper').port;
+require('dotenv').config();
+const port=process.env.PORT;
+// const port=require('./helper').port;
 
 app.use(express.json());
 
