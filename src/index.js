@@ -1,6 +1,8 @@
-const express=require('express')
+const express=require('express');
+const req = require('express/lib/request');
 const app=express();
-const port=4000;
+const port=require('./helper').port;
+
 app.use(express.json());
 
 app.get('/',(req,res)=>{
@@ -10,7 +12,14 @@ app.post('/hello',(req,res)=>
 {
     res.send('This is post data');
 })
-app.post('/uname',(req,res)=>
+app.post('/uname',(req,res,next)=>
+{req.body.username+="This is middle ware method"
+    next();
+},function(req,res,next)
+{
+    req.body.username+="This is new thing";
+    next();
+} ,(req,res)=>
 {
     console.log(req.body.username)
     res.status(200).send({"usr":req.body.username});
